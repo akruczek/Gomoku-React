@@ -1,23 +1,31 @@
-const chartHeight = 13;
-const chartWidth = 13;
+export let chartHeight = 13;
+export let chartWidth = 13;
 export const chartCellsNumber = chartHeight * chartWidth;
+export let chartTable = [];
 
 //TWORZENIE TABLICY NA PODSTAWIE ZMIENNYCH \/
 
 export const chartSize =[ [], [] ];
 
-for (let i=0; i<chartWidth; i++)
-  chartSize[0].push(i);
-for (let i=0; i<chartHeight; i++)
-  chartSize[1].push(i);
+renderChartSize();
+renderChart();
 
-let chartRow = [];
-export const chartTable = [];
+export function renderChartSize() {
+  for (let i=0; i<chartWidth; i++)
+    chartSize[0].push(i);
+  for (let i=0; i<chartHeight; i++)
+    chartSize[1].push(i);
+}
 
-chartSize[0].map(itemHeight => {
-  chartSize[1].map(itemWidth => {
-    chartRow.push(`${itemHeight}-${itemWidth}`);
+export function renderChart() {
+  let chartRow = [];
+  chartTable = [];
+  chartSize[0].map(itemHeight => {
+    chartSize[1].map(itemWidth => {
+      chartRow.push(`${itemHeight}-${itemWidth}`);
+    });
+    chartTable.push(chartRow);
+    chartRow = [];
   });
-  chartTable.push(chartRow);
-  chartRow = [];
-});
+  return chartTable;
+}

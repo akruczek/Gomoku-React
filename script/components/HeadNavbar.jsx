@@ -4,11 +4,20 @@ import {Navbar, NavItem} from 'react-materialize';
 export const HeadNavbar =(props)=> {
   return (
     <Navbar brand='Gomoku-React' left className="HeadNavbar">
-    	<NavItem onClick={props.startNewGame}>
-        <span style={{color: props.isRunGame ? "rgba(250,0,0,0.75)" : "rgba(0,250,0,.5)"}}>{props.isRunGame ? "Stop Game" : "Start New Game"}</span>
+      <NavItem className="translationIcon" onClick={props.changeLang}>
+        <img src="./../../images/translation.png"/>
       </NavItem>
-    	<NavItem onClick={props.changeSymbol}>Change Symbol:
+
+    	<NavItem onClick={props.startNewGame}>
+        <span style={{color: props.isRunGame ? "rgba(250,0,0,0.75)" : "rgba(0,250,0,.5)"}}>{props.isRunGame ? "Stop Game" : props.text.Start_New_Game}</span>
+      </NavItem>
+
+    	<NavItem onClick={props.changeSymbol}>{props.text.Change_Symbol}:
         <span className="symbolIcon"><img src={props.symbol ? "./../../images/circle.png" : "./../../images/cross.png"} /></span>
+      </NavItem>
+
+      <NavItem className="resizeIcon" onClick={props.resize}>
+        <img src="./../../images/size.png"/>
       </NavItem>
     </Navbar>
   );

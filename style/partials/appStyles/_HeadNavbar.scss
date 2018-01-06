@@ -1,9 +1,25 @@
 .HeadNavbar {
   background-color: #132940;
   font-weight: 600;
+  .translationIcon {
+    display: flex;
+    justify-content: center;
+    img {
+      margin-top: 10px;
+      margin-bottom: -10px;
+    }
+  }
   .symbolIcon {
     position: absolute;
     padding: 10px;
     margin-left: 10px;
+  }
+  .resizeIcon {
+    margin-left: 50px;
+    img {
+      margin-top: 10px;
+      margin-bottom: -10px;
+      border-radius: 10px;
+    }
   }
 }
