@@ -1,19 +1,18 @@
-.chartTable {
-  display: flex;
-  border-collapse: separate;
-  border-spacing: 2px;
-  justify-content: center;
+.chart {
   margin-top: 50px;
-  .chartTableBody {
-    .chartTableRow {
-      .chartTableCell {
-        width: 40px;
-        height: 40px;
-        background-color: #838486;
-        border-radius: 5px;
-        box-shadow: 1px 1px 1px darkblue;
-        vertical-align: middle;
-        text-align: center;
+  .chartRow {
+    display: flex;
+    justify-content: center;
+    .chartCell {
+      margin: 2px;
+      width: 40px;
+      height: 40px;
+      background-color: #838486;
+      border-radius: 5px;
+      box-shadow: 1px 1px 1px darkblue;
+      &:hover {
+        background-color: darken(#838486, 5%);
+        opacity: .75;
       }
     }
   }

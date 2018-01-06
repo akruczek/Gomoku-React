@@ -1,20 +1,30 @@
 import React from 'react';
-import {chartSize} from './../variables/chart.jsx';
+import {chartSize, chartTable} from './../variables/chart.jsx';
 
 export class Chart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {chartTable}
+  }
+
+  mouseClick =(event)=> {
+    console.log("Clicked field ID:", event.target.id);
+  }
+
   render() {
+    console.log(this.state.chartTable);
     return (
-      <table className="chartTable" style={{height: "300px"}}>
-        <tbody className="chartTableBody">
+      <div className="chart" style={{height: "300px"}}>
           {chartSize[0].map(itemHeight => {
-            return <tr key={itemHeight} className="chartTableRow">{
+            return <div key={itemHeight} className="chartRow">{
             chartSize[1].map(itemWidth => {
-              return <td key={itemWidth} id={String(itemHeight) + "-" + String(itemWidth)} className="chartTableCell"></td>
+              return <div key={itemWidth} id={String(itemHeight) + "-" + String(itemWidth)}
+                onClick={event => this.mouseClick(event)}
+                className="chartCell"></div>;
             })
-            }</tr>
+          }</div>;
           })}
-        </tbody>
-      </table>
+      </div>
     );
   }
 }
