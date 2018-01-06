@@ -30,13 +30,22 @@ export class App extends React.Component {
     event.preventDefault();
   }
 
+  moved =()=> {
+    console.log("moved...");
+    this.setState({
+      moves: this.state.moves + 1,
+      freeCells: this.state.freeCells - 1
+    });
+  }
+
   render() {
+    console.log(this.state.moves);
     return (
       <div className="App">
         <HeadNavbar changeSymbol={this.changeSymbol} symbol={this.state.symbol} startNewGame={this.startNewGame}
           isRunGame={this.state.isRunGame}/>
         <Stats moves={this.state.moves} freeCells={this.state.freeCells} isRunGame={this.state.isRunGame}/>
-        <Chart/>
+        <Chart isRunGame={this.state.isRunGame} symbol={this.state.symbol} moved={this.moved}/>
       </div>
     );
   }

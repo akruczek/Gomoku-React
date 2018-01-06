@@ -8,7 +8,15 @@ export class Chart extends React.Component {
   }
 
   mouseClick =(event)=> {
-    console.log("Clicked field ID:", event.target.id);
+    let x = Number(event.target.id.split("-")[0]);
+    let y = Number(event.target.id.split("-")[1]);
+    if (this.props.isRunGame && event.target.className !== "symbol") {
+      console.log(x, y);
+      let newChartTable = this.state.chartTable;
+      newChartTable[x][y] = this.props.symbol ? "circle" : "cross";
+      this.setState({ chartTable: newChartTable });
+      this.props.moved();
+    }
   }
 
   render() {
@@ -18,9 +26,19 @@ export class Chart extends React.Component {
           {chartSize[0].map(itemHeight => {
             return <div key={itemHeight} className="chartRow">{
             chartSize[1].map(itemWidth => {
-              return <div key={itemWidth} id={String(itemHeight) + "-" + String(itemWidth)}
-                onClick={event => this.mouseClick(event)}
-                className="chartCell"></div>;
+              console.log(this.state.chartTable[itemHeight][itemWidth].indexOf("-") > -1);
+              return (
+                <div key={itemWidth} id={String(itemHeight) + "-" + String(itemWidth)} onClick={event => this.mouseClick(event)}
+                    className="chartCell">
+                  <img className="symbol"
+                    src={this.state.chartTable[itemHeight][itemWidth].indexOf("-") > -1 ? (
+                      ""
+                    ) : (
+                      this.state.chartTable[itemHeight][itemWidth] === "circle" ?
+                      ( "./../../images/circle.png" ) : ( "./../../images/cross.png" )
+                  )}/>
+                </div>
+              );
             })
           }</div>;
           })}
