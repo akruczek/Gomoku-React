@@ -16,7 +16,7 @@ export class Stats extends React.Component {
 
         <div className="freeCells">
           <img src="./../../images/freeCells.png"/>
-          <h3>{this.props.text.Free_Cells}: {this.props.freeCells}</h3>
+          <h3>{this.props.text.Free_Cells}: {this.props.isRunGame ? this.props.freeCells : "0"}</h3>
         </div>
       </section>
     );

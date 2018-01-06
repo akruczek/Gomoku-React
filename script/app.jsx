@@ -14,7 +14,7 @@ export class App extends React.Component {
       isRunGame: false,
       symbol: true,  //true - GREEN CIRCLE, false - RED CROSS
       moves: 0,
-      freeCells: 0,
+      freeCells: chartCellsNumber,
       size: 3,  //1 - SMALL, 2 - MEDIUM, 3 - LARGE
       chartTable
     }
@@ -46,7 +46,7 @@ export class App extends React.Component {
     this.setState({
       isRunGame: !this.state.isRunGame,
       moves: 0,
-      freeCells: this.state.isRunGame ? 0 : chartCellsNumber,
+      // freeCells: chartCellsNumber,
       chartTable
     });
     event.preventDefault();
@@ -62,11 +62,14 @@ export class App extends React.Component {
   resize =(event)=> {
     if (!this.state.isRunGame) {
       this.setState({
-        size: this.state.size < 3 ? this.state.size + 1 : 1
+        size: this.state.size < 3 ? this.state.size + 1 : 1,
       }, () => {
         renderChartSize(1 + 4 * this.state.size, 1 + 4 * this.state.size);
         renderChart();
-        this.setState({chartTable});
+        this.setState({
+          chartTable,
+          freeCells: (1 + 4 * this.state.size) * (1 + 4 * this.state.size)
+        });
       })
     }
     event.preventDefault();

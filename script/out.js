@@ -10986,7 +10986,7 @@ var App = exports.App = function (_React$Component) {
       _this.setState({
         isRunGame: !_this.state.isRunGame,
         moves: 0,
-        freeCells: _this.state.isRunGame ? 0 : _chart.chartCellsNumber,
+        // freeCells: chartCellsNumber,
         chartTable: _chart.chartTable
       });
       event.preventDefault();
@@ -11006,7 +11006,10 @@ var App = exports.App = function (_React$Component) {
         }, function () {
           (0, _chart.renderChartSize)(1 + 4 * _this.state.size, 1 + 4 * _this.state.size);
           (0, _chart.renderChart)();
-          _this.setState({ chartTable: _chart.chartTable });
+          _this.setState({
+            chartTable: _chart.chartTable,
+            freeCells: (1 + 4 * _this.state.size) * (1 + 4 * _this.state.size)
+          });
         });
       }
       event.preventDefault();
@@ -11017,7 +11020,7 @@ var App = exports.App = function (_React$Component) {
       isRunGame: false,
       symbol: true, //true - GREEN CIRCLE, false - RED CROSS
       moves: 0,
-      freeCells: 0,
+      freeCells: _chart.chartCellsNumber,
       size: 3, //1 - SMALL, 2 - MEDIUM, 3 - LARGE
       chartTable: _chart.chartTable
     };
@@ -46076,7 +46079,7 @@ var Stats = exports.Stats = function (_React$Component) {
             null,
             this.props.text.Free_Cells,
             ": ",
-            this.props.freeCells
+            this.props.isRunGame ? this.props.freeCells : "0"
           )
         )
       );
