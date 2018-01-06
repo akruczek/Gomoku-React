@@ -15,6 +15,7 @@ export class App extends React.Component {
       symbol: true,  //true - GREEN CIRCLE, false - RED CROSS
       moves: 0,
       freeCells: 0,
+      size: 3,  //1 - SMALL, 2 - MEDIUM, 3 - LARGE
       chartTable
     }
   }
@@ -59,8 +60,15 @@ export class App extends React.Component {
   }
 
   resize =(event)=> {
-    console.log("resize");
-    // renderChartSize();
+    if (!this.state.isRunGame) {
+      this.setState({
+        size: this.state.size < 3 ? this.state.size + 1 : 1
+      }, () => {
+        renderChartSize(1 + 4 * this.state.size, 1 + 4 * this.state.size);
+        renderChart();
+        this.setState({chartTable});
+      })
+    }
     event.preventDefault();
   }
 
@@ -68,7 +76,7 @@ export class App extends React.Component {
     return (
       <div className="App">
         <HeadNavbar text={this.state.text} changeSymbol={this.changeSymbol} symbol={this.state.symbol} startNewGame={this.startNewGame}
-          isRunGame={this.state.isRunGame} changeLang={this.changeLang} resize={this.resize}/>
+          isRunGame={this.state.isRunGame} changeLang={this.changeLang} resize={this.resize} size={this.state.size}/>
         <Stats text={this.state.text} moves={this.state.moves} freeCells={this.state.freeCells} isRunGame={this.state.isRunGame}/>
         <Chart isRunGame={this.state.isRunGame} symbol={this.state.symbol} moved={this.moved} chartTable={this.state.chartTable}
           mouseClick={this.mouseClick}/>

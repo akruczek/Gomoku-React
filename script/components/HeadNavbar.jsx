@@ -18,6 +18,7 @@ export const HeadNavbar =(props)=> {
 
       <NavItem className="resizeIcon" onClick={props.resize}>
         <img src="./../../images/size.png"/>
+        <span>{props.size === 3 ? props.text.Large : (props.size === 2 ? props.text.Medium : props.text.Small)}</span>
       </NavItem>
     </Navbar>
   );

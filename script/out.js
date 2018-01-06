@@ -11000,8 +11000,15 @@ var App = exports.App = function (_React$Component) {
     };
 
     _this.resize = function (event) {
-      console.log("resize");
-      // renderChartSize();
+      if (!_this.state.isRunGame) {
+        _this.setState({
+          size: _this.state.size < 3 ? _this.state.size + 1 : 1
+        }, function () {
+          (0, _chart.renderChartSize)(1 + 4 * _this.state.size, 1 + 4 * _this.state.size);
+          (0, _chart.renderChart)();
+          _this.setState({ chartTable: _chart.chartTable });
+        });
+      }
       event.preventDefault();
     };
 
@@ -11011,6 +11018,7 @@ var App = exports.App = function (_React$Component) {
       symbol: true, //true - GREEN CIRCLE, false - RED CROSS
       moves: 0,
       freeCells: 0,
+      size: 3, //1 - SMALL, 2 - MEDIUM, 3 - LARGE
       chartTable: _chart.chartTable
     };
     return _this;
@@ -11023,7 +11031,7 @@ var App = exports.App = function (_React$Component) {
         'div',
         { className: 'App' },
         _react2.default.createElement(_HeadNavbar.HeadNavbar, { text: this.state.text, changeSymbol: this.changeSymbol, symbol: this.state.symbol, startNewGame: this.startNewGame,
-          isRunGame: this.state.isRunGame, changeLang: this.changeLang, resize: this.resize }),
+          isRunGame: this.state.isRunGame, changeLang: this.changeLang, resize: this.resize, size: this.state.size }),
         _react2.default.createElement(_Stats.Stats, { text: this.state.text, moves: this.state.moves, freeCells: this.state.freeCells, isRunGame: this.state.isRunGame }),
         _react2.default.createElement(_Chart.Chart, { isRunGame: this.state.isRunGame, symbol: this.state.symbol, moved: this.moved, chartTable: this.state.chartTable,
           mouseClick: this.mouseClick })
@@ -11421,10 +11429,11 @@ var chartTable = exports.chartTable = [];
 
 var chartSize = exports.chartSize = [[], []];
 
-renderChartSize();
+renderChartSize(chartWidth, chartHeight);
 renderChart();
 
-function renderChartSize() {
+function renderChartSize(chartWidth, chartHeight) {
+  exports.chartSize = chartSize = [[], []];
   for (var i = 0; i < chartWidth; i++) {
     chartSize[0].push(i);
   }for (var _i = 0; _i < chartHeight; _i++) {
@@ -11442,7 +11451,6 @@ function renderChart() {
     chartTable.push(chartRow);
     chartRow = [];
   });
-  return chartTable;
 }
 
 /***/ }),
@@ -11987,7 +11995,7 @@ exports = module.exports = __webpack_require__(108)(undefined);
 
 
 // module
-exports.push([module.i, "html {\n  animation: opacity 1s;\n  background-color: #397ABF; }\n  html .App .HeadNavbar {\n    background-color: #132940;\n    font-weight: 600; }\n    html .App .HeadNavbar .translationIcon {\n      display: flex;\n      justify-content: center; }\n      html .App .HeadNavbar .translationIcon img {\n        margin-top: 10px;\n        margin-bottom: -10px; }\n    html .App .HeadNavbar .symbolIcon {\n      position: absolute;\n      padding: 10px;\n      margin-left: 10px; }\n    html .App .HeadNavbar .resizeIcon {\n      margin-left: 50px; }\n      html .App .HeadNavbar .resizeIcon img {\n        margin-top: 10px;\n        margin-bottom: -10px;\n        border-radius: 10px; }\n  html .App .chart .chartRow {\n    display: flex;\n    justify-content: center; }\n    html .App .chart .chartRow .chartCell {\n      margin: 2px;\n      width: 40px;\n      height: 40px;\n      background-color: #838486;\n      border-radius: 5px;\n      box-shadow: 1px 1px 1px darkblue;\n      padding: 3px;\n      cursor: pointer; }\n      html .App .chart .chartRow .chartCell:hover {\n        background-color: #767779;\n        opacity: .75; }\n  html .App .stats {\n    width: 500px;\n    height: 75px;\n    margin: 0 auto;\n    display: flex;\n    justify-content: space-between; }\n    html .App .stats div {\n      align-self: center;\n      text-align: center; }\n      html .App .stats div h3 {\n        margin: 0;\n        font-size: 24px;\n        font-weight: 600;\n        animation: opacity 0.5s; }\n      html .App .stats div .description {\n        font-size: 16px; }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n", ""]);
+exports.push([module.i, "html {\n  animation: opacity 1s;\n  background-color: #397ABF; }\n  html .App .HeadNavbar {\n    background-color: #132940;\n    font-weight: 600; }\n    html .App .HeadNavbar .translationIcon {\n      display: flex;\n      justify-content: center; }\n      html .App .HeadNavbar .translationIcon img {\n        margin-top: 10px;\n        margin-bottom: -10px; }\n    html .App .HeadNavbar .symbolIcon {\n      position: absolute;\n      padding: 10px;\n      margin-left: 10px; }\n    html .App .HeadNavbar .resizeIcon {\n      margin-left: 50px; }\n      html .App .HeadNavbar .resizeIcon img {\n        margin-top: 10px;\n        margin-bottom: -10px;\n        border-radius: 10px; }\n      html .App .HeadNavbar .resizeIcon span {\n        margin-left: 10px; }\n  html .App .chart .chartRow {\n    display: flex;\n    justify-content: center; }\n    html .App .chart .chartRow .chartCell {\n      margin: 2px;\n      width: 40px;\n      height: 40px;\n      background-color: #838486;\n      border-radius: 5px;\n      box-shadow: 1px 1px 1px darkblue;\n      padding: 3px;\n      cursor: pointer; }\n      html .App .chart .chartRow .chartCell:hover {\n        background-color: #767779;\n        opacity: .75; }\n  html .App .stats {\n    width: 500px;\n    height: 75px;\n    margin: 0 auto;\n    display: flex;\n    justify-content: space-between; }\n    html .App .stats div {\n      align-self: center;\n      text-align: center; }\n      html .App .stats div h3 {\n        margin: 0;\n        font-size: 24px;\n        font-weight: 600;\n        animation: opacity 0.5s; }\n      html .App .stats div .description {\n        font-size: 16px; }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n", ""]);
 
 // exports
 
@@ -24301,7 +24309,12 @@ var HeadNavbar = exports.HeadNavbar = function HeadNavbar(props) {
     _react2.default.createElement(
       _reactMaterialize.NavItem,
       { className: 'resizeIcon', onClick: props.resize },
-      _react2.default.createElement('img', { src: './../../images/size.png' })
+      _react2.default.createElement('img', { src: './../../images/size.png' }),
+      _react2.default.createElement(
+        'span',
+        null,
+        props.size === 3 ? props.text.Large : props.size === 2 ? props.text.Medium : props.text.Small
+      )
     )
   );
 };
@@ -46089,7 +46102,10 @@ var textEng = exports.textEng = {
   Change_Symbol: "Change Symbol",
   Moves: "Moves",
   Free_Cells: "Free Cells",
-  Get_5_in_a_row_first: "Get 5 in a row first!"
+  Get_5_in_a_row_first: "Get 5 in a row first!",
+  Small: "Small",
+  Medium: "Medium",
+  Large: "Large"
 };
 
 var textPol = exports.textPol = {
@@ -46098,7 +46114,10 @@ var textPol = exports.textPol = {
   Change_Symbol: "Zmień Symbol",
   Moves: "Ruchy",
   Free_Cells: "Wolne pola",
-  Get_5_in_a_row_first: "Ułóż 5 w jednej linii pierwszy!"
+  Get_5_in_a_row_first: "Ułóż 5 w jednej linii pierwszy!",
+  Small: "Mały",
+  Medium: "Średni",
+  Large: "Duży"
 };
 
 /***/ })

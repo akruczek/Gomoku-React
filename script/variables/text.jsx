@@ -4,7 +4,10 @@ export const textEng = {
   Change_Symbol: "Change Symbol",
   Moves: "Moves",
   Free_Cells: "Free Cells",
-  Get_5_in_a_row_first: "Get 5 in a row first!"
+  Get_5_in_a_row_first: "Get 5 in a row first!",
+  Small: "Small",
+  Medium: "Medium",
+  Large: "Large"
 }
 
 export const textPol = {
@@ -13,5 +16,8 @@ export const textPol = {
   Change_Symbol: "Zmień Symbol",
   Moves: "Ruchy",
   Free_Cells: "Wolne pola",
-  Get_5_in_a_row_first: "Ułóż 5 w jednej linii pierwszy!"
+  Get_5_in_a_row_first: "Ułóż 5 w jednej linii pierwszy!",
+  Small: "Mały",
+  Medium: "Średni",
+  Large: "Duży"
 }

@@ -5,12 +5,13 @@ export let chartTable = [];
 
 //TWORZENIE TABLICY NA PODSTAWIE ZMIENNYCH \/
 
-export const chartSize =[ [], [] ];
+export let chartSize =[ [], [] ];
 
-renderChartSize();
+renderChartSize(chartWidth, chartHeight);
 renderChart();
 
-export function renderChartSize() {
+export function renderChartSize(chartWidth, chartHeight) {
+  chartSize = [ [], [] ];
   for (let i=0; i<chartWidth; i++)
     chartSize[0].push(i);
   for (let i=0; i<chartHeight; i++)
@@ -27,5 +28,4 @@ export function renderChart() {
     chartTable.push(chartRow);
     chartRow = [];
   });
-  return chartTable;
 }
