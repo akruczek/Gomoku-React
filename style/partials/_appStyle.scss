@@ -1,7 +1,14 @@
 html {
+  animation: opacity 1s;
   background-color: #397ABF;
   .App {
     @import './appStyles/HeadNavbar';
     @import './appStyles/Chart';
+    @import './appStyles/Stats';
   }
+}
+
+@keyframes opacity {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }

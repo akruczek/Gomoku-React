@@ -1,5 +1,6 @@
 const chartHeight = 13;
 const chartWidth = 13;
+export const chartCellsNumber = chartHeight * chartWidth;
 
 //TWORZENIE TABLICY NA PODSTAWIE ZMIENNYCH \/
 
