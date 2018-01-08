@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {HeadNavbar} from './components/HeadNavbar.jsx';
 import {Chart} from './components/Chart.jsx';
-import {chartCellsNumber, chartTable, renderChart, renderChartSize, chartHeight, chartWidth} from './variables/chart.jsx';
 import {Stats} from './components/Stats.jsx';
+import {Move, checkWinner} from './components/AI.jsx';
+import {WinInfo} from './components/WinInfo.jsx';
 import {textEng, textPol} from './variables/text.jsx';
-import {Move} from './components/AI.jsx';
+import {chartCellsNumber, chartTable, renderChart, renderChartSize, chartHeight, chartWidth} from './variables/chart.jsx';
 
 export class App extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export class App extends React.Component {
       availableMove: true,  //BLOCKING MOVE DURING COMPUTER TURN
       size: 3,  //1 - SMALL, 2 - MEDIUM, 3 - LARGE
       difficulty: 1,  //1 - EASY, 2 - MEDIUM, 3 - LARGE
+      win: false,
       chartTable
     }
   }
@@ -46,7 +48,6 @@ export class App extends React.Component {
     setTimeout(()=> {
       let x = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[0]);
       let y = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[1]);
-      console.log(x, y);
       this.placeSymbol(x, y, (this.state.symbol ? "cross" : "circle"));
       this.setState({availableMove: true});
     }, 500);
@@ -67,7 +68,25 @@ export class App extends React.Component {
   }
 
   checkWinner =()=> {
-    console.log("is winner?")
+    if (!this.state.win) {
+      let winner = checkWinner(5, this.state.chartTable, (1 + 4 * this.state.size));
+      if (winner !== false) {
+        if (this.state.symbol && winner === "circle" || !this.state.symbol && winner === "cross") {
+          console.log("YOU WIN!");
+          this.startNewGame(event);
+          this.setState({
+            win: true
+          }, () => { $("#winner").modal("open"); })
+        }
+        else {
+          this.startNewGame();
+          this.setState({
+            win: false
+          }, () => { $("#winner").modal("open"); })
+          console.log("YOU LOSE!");
+        }
+      }
+    }
   }
 
   startNewGame =(event)=> {
@@ -78,7 +97,7 @@ export class App extends React.Component {
       freeCells: (1 + 4 * this.state.size) * (1 + 4 * this.state.size),
       chartTable
     });
-    event.preventDefault();
+    event && event.preventDefault();
   }
 
   moved =()=> {
@@ -120,6 +139,7 @@ export class App extends React.Component {
         <Stats text={this.state.text} moves={this.state.moves} freeCells={this.state.freeCells} isRunGame={this.state.isRunGame}/>
         <Chart isRunGame={this.state.isRunGame} symbol={this.state.symbol} moved={this.moved} chartTable={this.state.chartTable}
           mouseClick={this.mouseClick}/>
+        <WinInfo win={this.state.win}/>
       </div>
     );
   }

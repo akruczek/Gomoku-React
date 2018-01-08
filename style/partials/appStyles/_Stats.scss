@@ -11,15 +11,9 @@
       margin: 0;
       font-size: 24px;
       font-weight: 600;
-      animation: opacity 0.5s;
-    }
-    .description {
-      font-size: 16px;
-    }
-  }
-}
+      animation: opacity 0.5s; }
+    .description { font-size: 16px; } } }
 
 @keyframes opacity {
   0% {opacity: 0;}
-  100% {opacity: 1;}
-}
+  100% {opacity: 1;} }
