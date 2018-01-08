@@ -20,6 +20,11 @@ export const HeadNavbar =(props)=> {
         <img src="./../../images/size.png"/>
         <span>{props.size === 3 ? props.text.Large : (props.size === 2 ? props.text.Medium : props.text.Small)}</span>
       </NavItem>
+
+      <NavItem className="changeDifficulty" onClick={props.changeDifficulty}>
+        <img src="./../../images/ai.png"/>
+        <span>{props.difficulty === 3 ? props.text.Hard : (props.difficulty === 2 ? props.text.Medium : props.text.Easy)}</span>
+      </NavItem>
     </Navbar>
   );
 }

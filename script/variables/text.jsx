@@ -7,7 +7,9 @@ export const textEng = {
   Get_5_in_a_row_first: "Get 5 in a row first!",
   Small: "Small",
   Medium: "Medium",
-  Large: "Large"
+  Large: "Large",
+  Easy: "Easy",
+  Hard: "Hard"
 }
 
 export const textPol = {
@@ -19,5 +21,7 @@ export const textPol = {
   Get_5_in_a_row_first: "Ułóż 5 w jednej linii pierwszy!",
   Small: "Mały",
   Medium: "Średni",
-  Large: "Duży"
+  Large: "Duży",
+  Easy: "Łatwy",
+  Hard: "Trudny"
 }

@@ -6,23 +6,17 @@
     justify-content: center;
     img {
       margin-top: 10px;
-      margin-bottom: -10px;
-    }
-  }
+      margin-bottom: -10px; } }
   .symbolIcon {
     position: absolute;
     padding: 10px;
-    margin-left: 10px;
-  }
-  .resizeIcon {
-    margin-left: 50px;
+    margin-left: 10px; }
+  .resizeIcon {margin-left: 50px;}
+  .resizeIcon, .changeDifficulty {
     img {
       margin-top: 10px;
       margin-bottom: -10px;
-      border-radius: 10px;
-    }
-    span {
-      margin-left: 10px;
-    }
+      border-radius: 10px; }
+    span { margin-left: 10px; }
   }
 }

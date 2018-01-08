@@ -16,6 +16,7 @@ export class App extends React.Component {
       moves: 0,
       freeCells: chartCellsNumber,
       size: 3,  //1 - SMALL, 2 - MEDIUM, 3 - LARGE
+      difficulty: 1,  //1 - EASY, 2 - MEDIUM, 3 - LARGE
       chartTable
     }
   }
@@ -46,7 +47,6 @@ export class App extends React.Component {
     this.setState({
       isRunGame: !this.state.isRunGame,
       moves: 0,
-      // freeCells: chartCellsNumber,
       chartTable
     });
     event.preventDefault();
@@ -62,7 +62,7 @@ export class App extends React.Component {
   resize =(event)=> {
     if (!this.state.isRunGame) {
       this.setState({
-        size: this.state.size < 3 ? this.state.size + 1 : 1,
+        size: this.state.size < 3 ? this.state.size + 1 : 1
       }, () => {
         renderChartSize(1 + 4 * this.state.size, 1 + 4 * this.state.size);
         renderChart();
@@ -75,11 +75,22 @@ export class App extends React.Component {
     event.preventDefault();
   }
 
+  changeDifficulty =(event)=> {
+    if (!this.state.isRunGame) {
+      this.setState({
+        difficulty: this.state.difficulty < 3 ? this.state.difficulty + 1 : 1
+      });
+    }
+
+    event.preventDefault();
+  }
+
   render() {
     return (
       <div className="App">
         <HeadNavbar text={this.state.text} changeSymbol={this.changeSymbol} symbol={this.state.symbol} startNewGame={this.startNewGame}
-          isRunGame={this.state.isRunGame} changeLang={this.changeLang} resize={this.resize} size={this.state.size}/>
+          isRunGame={this.state.isRunGame} changeLang={this.changeLang} resize={this.resize} size={this.state.size}
+          changeDifficulty={this.changeDifficulty} difficulty={this.state.difficulty}/>
         <Stats text={this.state.text} moves={this.state.moves} freeCells={this.state.freeCells} isRunGame={this.state.isRunGame}/>
         <Chart isRunGame={this.state.isRunGame} symbol={this.state.symbol} moved={this.moved} chartTable={this.state.chartTable}
           mouseClick={this.mouseClick}/>

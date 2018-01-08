@@ -10986,7 +10986,6 @@ var App = exports.App = function (_React$Component) {
       _this.setState({
         isRunGame: !_this.state.isRunGame,
         moves: 0,
-        // freeCells: chartCellsNumber,
         chartTable: _chart.chartTable
       });
       event.preventDefault();
@@ -11015,6 +11014,16 @@ var App = exports.App = function (_React$Component) {
       event.preventDefault();
     };
 
+    _this.changeDifficulty = function (event) {
+      if (!_this.state.isRunGame) {
+        _this.setState({
+          difficulty: _this.state.difficulty < 3 ? _this.state.difficulty + 1 : 1
+        });
+      }
+
+      event.preventDefault();
+    };
+
     _this.state = {
       text: _text.textEng,
       isRunGame: false,
@@ -11022,6 +11031,7 @@ var App = exports.App = function (_React$Component) {
       moves: 0,
       freeCells: _chart.chartCellsNumber,
       size: 3, //1 - SMALL, 2 - MEDIUM, 3 - LARGE
+      difficulty: 1, //1 - EASY, 2 - MEDIUM, 3 - LARGE
       chartTable: _chart.chartTable
     };
     return _this;
@@ -11034,7 +11044,8 @@ var App = exports.App = function (_React$Component) {
         'div',
         { className: 'App' },
         _react2.default.createElement(_HeadNavbar.HeadNavbar, { text: this.state.text, changeSymbol: this.changeSymbol, symbol: this.state.symbol, startNewGame: this.startNewGame,
-          isRunGame: this.state.isRunGame, changeLang: this.changeLang, resize: this.resize, size: this.state.size }),
+          isRunGame: this.state.isRunGame, changeLang: this.changeLang, resize: this.resize, size: this.state.size,
+          changeDifficulty: this.changeDifficulty, difficulty: this.state.difficulty }),
         _react2.default.createElement(_Stats.Stats, { text: this.state.text, moves: this.state.moves, freeCells: this.state.freeCells, isRunGame: this.state.isRunGame }),
         _react2.default.createElement(_Chart.Chart, { isRunGame: this.state.isRunGame, symbol: this.state.symbol, moved: this.moved, chartTable: this.state.chartTable,
           mouseClick: this.mouseClick })
@@ -11998,7 +12009,7 @@ exports = module.exports = __webpack_require__(108)(undefined);
 
 
 // module
-exports.push([module.i, "html {\n  animation: opacity 1s;\n  background-color: #397ABF; }\n  html .App .HeadNavbar {\n    background-color: #132940;\n    font-weight: 600; }\n    html .App .HeadNavbar .translationIcon {\n      display: flex;\n      justify-content: center; }\n      html .App .HeadNavbar .translationIcon img {\n        margin-top: 10px;\n        margin-bottom: -10px; }\n    html .App .HeadNavbar .symbolIcon {\n      position: absolute;\n      padding: 10px;\n      margin-left: 10px; }\n    html .App .HeadNavbar .resizeIcon {\n      margin-left: 50px; }\n      html .App .HeadNavbar .resizeIcon img {\n        margin-top: 10px;\n        margin-bottom: -10px;\n        border-radius: 10px; }\n      html .App .HeadNavbar .resizeIcon span {\n        margin-left: 10px; }\n  html .App .chart .chartRow {\n    display: flex;\n    justify-content: center; }\n    html .App .chart .chartRow .chartCell {\n      margin: 2px;\n      width: 40px;\n      height: 40px;\n      background-color: #838486;\n      border-radius: 5px;\n      box-shadow: 1px 1px 1px darkblue;\n      padding: 3px;\n      cursor: pointer; }\n      html .App .chart .chartRow .chartCell:hover {\n        background-color: #767779;\n        opacity: .75; }\n  html .App .stats {\n    width: 500px;\n    height: 75px;\n    margin: 0 auto;\n    display: flex;\n    justify-content: space-between; }\n    html .App .stats div {\n      align-self: center;\n      text-align: center; }\n      html .App .stats div h3 {\n        margin: 0;\n        font-size: 24px;\n        font-weight: 600;\n        animation: opacity 0.5s; }\n      html .App .stats div .description {\n        font-size: 16px; }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n", ""]);
+exports.push([module.i, "html {\n  animation: opacity 1s;\n  background-color: #397ABF; }\n  html .App .HeadNavbar {\n    background-color: #132940;\n    font-weight: 600; }\n    html .App .HeadNavbar .translationIcon {\n      display: flex;\n      justify-content: center; }\n      html .App .HeadNavbar .translationIcon img {\n        margin-top: 10px;\n        margin-bottom: -10px; }\n    html .App .HeadNavbar .symbolIcon {\n      position: absolute;\n      padding: 10px;\n      margin-left: 10px; }\n    html .App .HeadNavbar .resizeIcon {\n      margin-left: 50px; }\n    html .App .HeadNavbar .resizeIcon img, html .App .HeadNavbar .changeDifficulty img {\n      margin-top: 10px;\n      margin-bottom: -10px;\n      border-radius: 10px; }\n    html .App .HeadNavbar .resizeIcon span, html .App .HeadNavbar .changeDifficulty span {\n      margin-left: 10px; }\n  html .App .chart .chartRow {\n    display: flex;\n    justify-content: center; }\n    html .App .chart .chartRow .chartCell {\n      margin: 2px;\n      width: 40px;\n      height: 40px;\n      background-color: #838486;\n      border-radius: 5px;\n      box-shadow: 1px 1px 1px darkblue;\n      padding: 3px;\n      cursor: pointer; }\n      html .App .chart .chartRow .chartCell:hover {\n        background-color: #767779;\n        opacity: .75; }\n  html .App .stats {\n    width: 500px;\n    height: 75px;\n    margin: 0 auto;\n    display: flex;\n    justify-content: space-between; }\n    html .App .stats div {\n      align-self: center;\n      text-align: center; }\n      html .App .stats div h3 {\n        margin: 0;\n        font-size: 24px;\n        font-weight: 600;\n        animation: opacity 0.5s; }\n      html .App .stats div .description {\n        font-size: 16px; }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n\n@keyframes opacity {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n", ""]);
 
 // exports
 
@@ -24317,6 +24328,16 @@ var HeadNavbar = exports.HeadNavbar = function HeadNavbar(props) {
         'span',
         null,
         props.size === 3 ? props.text.Large : props.size === 2 ? props.text.Medium : props.text.Small
+      )
+    ),
+    _react2.default.createElement(
+      _reactMaterialize.NavItem,
+      { className: 'changeDifficulty', onClick: props.changeDifficulty },
+      _react2.default.createElement('img', { src: './../../images/ai.png' }),
+      _react2.default.createElement(
+        'span',
+        null,
+        props.difficulty === 3 ? props.text.Hard : props.difficulty === 2 ? props.text.Medium : props.text.Easy
       )
     )
   );
@@ -46108,7 +46129,9 @@ var textEng = exports.textEng = {
   Get_5_in_a_row_first: "Get 5 in a row first!",
   Small: "Small",
   Medium: "Medium",
-  Large: "Large"
+  Large: "Large",
+  Easy: "Easy",
+  Hard: "Hard"
 };
 
 var textPol = exports.textPol = {
@@ -46120,7 +46143,9 @@ var textPol = exports.textPol = {
   Get_5_in_a_row_first: "Ułóż 5 w jednej linii pierwszy!",
   Small: "Mały",
   Medium: "Średni",
-  Large: "Duży"
+  Large: "Duży",
+  Easy: "Łatwy",
+  Hard: "Trudny"
 };
 
 /***/ })
