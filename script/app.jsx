@@ -5,6 +5,7 @@ import {Chart} from './components/Chart.jsx';
 import {chartCellsNumber, chartTable, renderChart, renderChartSize, chartHeight, chartWidth} from './variables/chart.jsx';
 import {Stats} from './components/Stats.jsx';
 import {textEng, textPol} from './variables/text.jsx';
+import {Move} from './components/AI.jsx';
 
 export class App extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export class App extends React.Component {
       symbol: true,  //true - GREEN CIRCLE, false - RED CROSS
       moves: 0,
       freeCells: chartCellsNumber,
+      availableMove: true,  //BLOCKING MOVE DURING COMPUTER TURN
       size: 3,  //1 - SMALL, 2 - MEDIUM, 3 - LARGE
       difficulty: 1,  //1 - EASY, 2 - MEDIUM, 3 - LARGE
       chartTable
@@ -31,15 +33,41 @@ export class App extends React.Component {
     event.preventDefault();
   }
 
+  placeSymbol =(x, y, symbol)=> {
+    let newChartTable = this.state.chartTable;
+    newChartTable[x][y] = symbol;
+    this.setState({chartTable: newChartTable}, () => {
+      this.moved();
+      this.checkWinner();
+    });
+  }
+
+  move =(difficulty)=> {
+    setTimeout(()=> {
+      let x = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[0]);
+      let y = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[1]);
+      console.log(x, y);
+      this.placeSymbol(x, y, (this.state.symbol ? "cross" : "circle"));
+      this.setState({availableMove: true});
+    }, 500);
+  }
+
   mouseClick =(event)=> {
-    if (this.state.isRunGame && event.target.className !== "symbol") {
+    if (this.state.isRunGame && event.target.className !== "symbol" && this.state.availableMove) {
+      this.setState({availableMove: false});
       let x = Number(event.target.id.split("-")[0]);
       let y = Number(event.target.id.split("-")[1]);
-      let newChartTable = this.state.chartTable;
-      newChartTable[x][y] = this.state.symbol ? "circle" : "cross";
-      this.setState({ chartTable: newChartTable });
-      this.moved();
+      this.placeSymbol(x, y, (this.state.symbol ? "circle" : "cross"));
+      switch(this.state.difficulty) {
+        case 1: this.move("easy"); break;
+        case 2: this.move("medium"); break;
+        case 3: this.move("hard"); break;
+      }
     }
+  }
+
+  checkWinner =()=> {
+    console.log("is winner?")
   }
 
   startNewGame =(event)=> {
@@ -47,6 +75,7 @@ export class App extends React.Component {
     this.setState({
       isRunGame: !this.state.isRunGame,
       moves: 0,
+      freeCells: (1 + 4 * this.state.size) * (1 + 4 * this.state.size),
       chartTable
     });
     event.preventDefault();
@@ -77,11 +106,8 @@ export class App extends React.Component {
 
   changeDifficulty =(event)=> {
     if (!this.state.isRunGame) {
-      this.setState({
-        difficulty: this.state.difficulty < 3 ? this.state.difficulty + 1 : 1
-      });
+      this.setState({ difficulty: this.state.difficulty < 3 ? this.state.difficulty + 1 : 1 });
     }
-
     event.preventDefault();
   }
 
