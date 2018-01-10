@@ -1709,21 +1709,22 @@ var App = exports.App = function (_React$Component) {
       event.preventDefault();
     };
 
-    _this.placeSymbol = function (x, y, symbol) {
+    _this.placeSymbol = function (x, y, symbol, isPlayer) {
       var newChartTable = _this.state.chartTable;
       newChartTable[x][y] = symbol;
       _this.setState({ chartTable: newChartTable }, function () {
-        _this.moved();
-        _this.checkWinner();
+        _this.moved(isPlayer);
       });
     };
 
     _this.move = function (difficulty) {
       setTimeout(function () {
-        var x = Number((0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size).split("-")[0]);
-        var y = Number((0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size).split("-")[1]);
-        _this.placeSymbol(x, y, _this.state.symbol ? "cross" : "circle");
-        _this.setState({ availableMove: true });
+        if (!_this.state.win) {
+          var x = Number((0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size).split("-")[0]);
+          var y = Number((0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size).split("-")[1]);
+          _this.placeSymbol(x, y, _this.state.symbol ? "cross" : "circle", false);
+          _this.setState({ availableMove: true });
+        }
       }, 500);
     };
 
@@ -1732,7 +1733,8 @@ var App = exports.App = function (_React$Component) {
         _this.setState({ availableMove: false });
         var x = Number(event.target.id.split("-")[0]);
         var y = Number(event.target.id.split("-")[1]);
-        _this.placeSymbol(x, y, _this.state.symbol ? "circle" : "cross");
+        _this.placeSymbol(x, y, _this.state.symbol ? "circle" : "cross", true);
+        _this.checkWinner();
         switch (_this.state.difficulty) {
           case 1:
             _this.move("easy");break;
@@ -1780,9 +1782,9 @@ var App = exports.App = function (_React$Component) {
       event && event.preventDefault();
     };
 
-    _this.moved = function () {
+    _this.moved = function (isPlayer) {
       _this.setState({
-        moves: _this.state.moves + 1,
+        moves: isPlayer ? _this.state.moves + 1 : _this.state.moves,
         freeCells: _this.state.freeCells - 1
       });
     };

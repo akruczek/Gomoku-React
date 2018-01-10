@@ -35,21 +35,22 @@ export class App extends React.Component {
     event.preventDefault();
   }
 
-  placeSymbol =(x, y, symbol)=> {
+  placeSymbol =(x, y, symbol, isPlayer)=> {
     let newChartTable = this.state.chartTable;
     newChartTable[x][y] = symbol;
     this.setState({chartTable: newChartTable}, () => {
-      this.moved();
-      this.checkWinner();
+      this.moved(isPlayer);
     });
   }
 
   move =(difficulty)=> {
     setTimeout(()=> {
-      let x = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[0]);
-      let y = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[1]);
-      this.placeSymbol(x, y, (this.state.symbol ? "cross" : "circle"));
-      this.setState({availableMove: true});
+      if (!this.state.win) {
+        let x = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[0]);
+        let y = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[1]);
+        this.placeSymbol(x, y, (this.state.symbol ? "cross" : "circle"), false);
+        this.setState({availableMove: true});
+      }
     }, 500);
   }
 
@@ -58,7 +59,8 @@ export class App extends React.Component {
       this.setState({availableMove: false});
       let x = Number(event.target.id.split("-")[0]);
       let y = Number(event.target.id.split("-")[1]);
-      this.placeSymbol(x, y, (this.state.symbol ? "circle" : "cross"));
+      this.placeSymbol(x, y, (this.state.symbol ? "circle" : "cross"), true);
+      this.checkWinner();
       switch(this.state.difficulty) {
         case 1: this.move("easy"); break;
         case 2: this.move("medium"); break;
@@ -100,9 +102,9 @@ export class App extends React.Component {
     event && event.preventDefault();
   }
 
-  moved =()=> {
+  moved =(isPlayer)=> {
     this.setState({
-      moves: this.state.moves + 1,
+      moves: isPlayer ? this.state.moves + 1 : this.state.moves,
       freeCells: this.state.freeCells - 1
     });
   }
