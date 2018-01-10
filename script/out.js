@@ -1720,10 +1720,13 @@ var App = exports.App = function (_React$Component) {
     _this.move = function (difficulty) {
       setTimeout(function () {
         if (!_this.state.win) {
-          var x = Number((0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size).split("-")[0]);
-          var y = Number((0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size).split("-")[1]);
+          var field = (0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size, _this.state.symbol ? "cross" : "circle");
+          var x = field[0];
+          var y = field[1];
+          console.log(x, y);
           _this.placeSymbol(x, y, _this.state.symbol ? "cross" : "circle", false);
           _this.setState({ availableMove: true });
+          _this.checkWinner();
         }
       }, 500);
     };
@@ -1820,7 +1823,7 @@ var App = exports.App = function (_React$Component) {
       freeCells: _chart.chartCellsNumber,
       availableMove: true, //BLOCKING MOVE DURING COMPUTER TURN
       size: 3, //1 - SMALL, 2 - MEDIUM, 3 - LARGE
-      difficulty: 1, //1 - EASY, 2 - MEDIUM, 3 - LARGE
+      difficulty: 2, //1 - EASY, 2 - MEDIUM, 3 - LARGE
       win: false,
       chartTable: _chart.chartTable
     };
@@ -42911,22 +42914,109 @@ var Stats = exports.Stats = function (_React$Component) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var Move = exports.Move = function Move(difficulty, chart, size) {
+var Move = exports.Move = function Move(difficulty, chart, size, symbol) {
   switch (difficulty) {
     case 'easy':
       {
         while (true) {
           var x = Math.floor(Math.random() * size);
           var y = Math.floor(Math.random() * size);
-          if (chart[x][y] !== "circle" && chart[x][y] !== "cross") {
-            return x + "-" + y;
+          if (chart[x][y].indexOf("-") > -1) {
+            return [Number(x), Number(y)];
           }
         }
         break;
       }
     case 'medium':
       {
+        while (true) {
 
+          var possibleFields = [];
+          var vsSymbol = symbol === "cross" ? "circle" : "cross";
+
+          //THIS DOUBLE LOOP IS CHECKING IS THERE ANY SYMBOL ON THE FIELD. WHEN FOUND IT,
+          //CHECKING ALL FOUR POINTS (IF POSSIBLE, MAX 5 FIELDS RANGE) AND ADD THESE FIELDS TO possibleFields ARRAY.
+          if (vsSymbolAmount(vsSymbol, size, chart) === false) {
+            for (var i = 0; i < size; i++) {
+              for (var j = 0; j < size; j++) {
+                if (chart[i][j] === symbol) {
+
+                  // > right
+                  if (size - i >= 5) {
+                    for (var k = 1; k <= 5; k++) {
+                      if (chart[i + k][j].indexOf("-") > -1) {
+                        possibleFields.push(chart[i + k][j]);
+                        break;
+                      } else if (chart[i + k][j] === "vsSymbol") {
+                        break;
+                      }
+                    }
+                  }
+
+                  // > left
+                  if (size - i <= 9) {
+                    for (var _k = 1; _k <= 5; _k++) {
+                      if (chart[i - _k][j].indexOf("-") > -1) {
+                        possibleFields.push(chart[i - _k][j]);
+                        break;
+                      } else if (chart[i - _k][j] === "vsSymbol") {
+                        break;
+                      }
+                    }
+                  }
+
+                  // > top
+                  if (size - j <= 9) {
+                    for (var _k2 = 1; _k2 <= 5; _k2++) {
+                      if (chart[i][j - _k2].indexOf("-") > -1) {
+                        possibleFields.push(chart[i][j - _k2]);
+                        break;
+                      } else if (chart[i][j - _k2] === "vsSymbol") {
+                        break;
+                      }
+                    }
+                  }
+
+                  // > bottom
+                  if (size - j >= 5) {
+                    for (var _k3 = 1; _k3 <= 5; _k3++) {
+                      if (chart[i][j + _k3].indexOf("-") > -1) {
+                        possibleFields.push(chart[i][j + _k3]);
+                        break;
+                      } else if (chart[i][j + _k3] === "vsSymbol") {
+                        break;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          } else {
+            // console.log(vsSymbolAmount(vsSymbol, size, chart));
+            var possibleDefenceFields = vsSymbolAmount(vsSymbol, size, chart);
+            var vsIndex = Math.floor(Math.random() * possibleDefenceFields.length);
+            return [Number(possibleDefenceFields[vsIndex].split("-")[0]), Number(possibleDefenceFields[vsIndex].split("-")[1])];
+          }
+
+          //IF possibleFields ARRAY CONTAIN VARS, DRAW RANDOM ARRAY ELEMENT.
+          if (possibleFields.length > 0) {
+            console.log(possibleFields);
+            var index = Math.floor(Math.random() * possibleFields.length);
+            console.log(index);
+            console.log(possibleFields[index]);
+            console.log(possibleFields[index].split("-")[0], possibleFields[index].split("-")[1]);
+            return [Number(possibleFields[index].split("-")[0]), Number(possibleFields[index].split("-")[1])];
+          } else {
+            //FIRST MOVE
+            while (true) {
+              var _x = Math.floor(Math.random() * size);
+              var _y = Math.floor(Math.random() * size);
+              if (chart[_x][_y].indexOf("-") > -1) {
+                return [Number(_x), Number(_y)];
+              }
+            }
+          }
+        }
         break;
       }
     case 'hard':
@@ -42934,6 +43024,68 @@ var Move = exports.Move = function Move(difficulty, chart, size) {
 
         break;
       }
+  }
+};
+
+//THIS DOUBLE LOOP CHECKING IF THERE IS ANY vsSymbol ON FIELD AND THEN,
+//COUNT HOW MUCH vsSymbols FOUND IN ONE ROW. IF MORE THAN 2 STARTS TO SAVE THESE FIELDS.
+var vsSymbolAmount = function vsSymbolAmount(vsSymbol, size, chart) {
+  var possibleDefenceFields = [];
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (chart[i][j] === vsSymbol) {
+
+        // > right
+        if (size - i >= 5) {
+          if (chart[i + 1][j] === vsSymbol && chart[i + 2][j] === vsSymbol) {
+            if (chart[i + 3][j] === vsSymbol) {
+              chart[i + 4][j].indexOf("-") > -1 && possibleDefenceFields.push(chart[i + 4][j]);
+            } else if (chart[i + 3][j].indexOf("-") > -1) {
+              possibleDefenceFields.push(chart[i + 3][j]);
+            }
+          }
+        }
+
+        // > left
+        if (size - i <= 9) {
+          if (chart[i - 1][j] === vsSymbol && chart[i - 2][j] === vsSymbol) {
+            if (chart[i - 3][j] === vsSymbol) {
+              chart[i - 4][j].indexOf("-") > -1 && possibleDefenceFields.push(chart[i - 4][j]);
+            } else if (chart[i - 3][j].indexOf("-") > -1) {
+              possibleDefenceFields.push(chart[i - 3][j]);
+            }
+          }
+        }
+
+        // > top
+        if (size - j <= 9) {
+          if (chart[i][j - 1] === vsSymbol && chart[i][j - 2] === vsSymbol) {
+            if (chart[i][j - 3] === vsSymbol) {
+              chart[i][j - 4].indexOf("-") > -1 && possibleDefenceFields.push(chart[i][j - 4]);
+            } else if (chart[i][j - 3].indexOf("-") > -1) {
+              possibleDefenceFields.push(chart[i][j - 3]);
+            }
+          }
+        }
+
+        // > bottom
+        if (size - j >= 5) {
+          if (chart[i][j + 1] === vsSymbol && chart[i][j + 2] === vsSymbol) {
+            if (chart[i][j + 3] === vsSymbol) {
+              chart[i][j + 4].indexOf("-") > -1 && possibleDefenceFields.push(chart[i][j + 4]);
+            } else if (chart[i][j + 3].indexOf("-") > -1) {
+              possibleDefenceFields.push(chart[i][j + 3]);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (possibleDefenceFields.length > 0) {
+    return possibleDefenceFields;
+  } else {
+    return false;
   }
 };
 

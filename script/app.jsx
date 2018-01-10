@@ -19,7 +19,7 @@ export class App extends React.Component {
       freeCells: chartCellsNumber,
       availableMove: true,  //BLOCKING MOVE DURING COMPUTER TURN
       size: 3,  //1 - SMALL, 2 - MEDIUM, 3 - LARGE
-      difficulty: 1,  //1 - EASY, 2 - MEDIUM, 3 - LARGE
+      difficulty: 2,  //1 - EASY, 2 - MEDIUM, 3 - LARGE
       win: false,
       chartTable
     }
@@ -46,10 +46,13 @@ export class App extends React.Component {
   move =(difficulty)=> {
     setTimeout(()=> {
       if (!this.state.win) {
-        let x = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[0]);
-        let y = Number(Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size)).split("-")[1]);
+        let field = Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size), (this.state.symbol ? "cross" : "circle"));
+        let x = field[0];
+        let y = field[1];
+        console.log(x, y);
         this.placeSymbol(x, y, (this.state.symbol ? "cross" : "circle"), false);
         this.setState({availableMove: true});
+        this.checkWinner();
       }
     }, 500);
   }
@@ -126,9 +129,7 @@ export class App extends React.Component {
   }
 
   changeDifficulty =(event)=> {
-    if (!this.state.isRunGame) {
-      this.setState({ difficulty: this.state.difficulty < 3 ? this.state.difficulty + 1 : 1 });
-    }
+    if (!this.state.isRunGame) { this.setState({ difficulty: this.state.difficulty < 3 ? this.state.difficulty + 1 : 1 }); }
     event.preventDefault();
   }
 
