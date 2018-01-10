@@ -100,6 +100,8 @@ export class App extends React.Component {
       isRunGame: !this.state.isRunGame,
       moves: 0,
       freeCells: (1 + 4 * this.state.size) * (1 + 4 * this.state.size),
+      win: false,
+      availableMove: true,
       chartTable
     });
     event && event.preventDefault();

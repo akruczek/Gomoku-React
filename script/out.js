@@ -1780,6 +1780,8 @@ var App = exports.App = function (_React$Component) {
         isRunGame: !_this.state.isRunGame,
         moves: 0,
         freeCells: (1 + 4 * _this.state.size) * (1 + 4 * _this.state.size),
+        win: false,
+        availableMove: true,
         chartTable: _chart.chartTable
       });
       event && event.preventDefault();
