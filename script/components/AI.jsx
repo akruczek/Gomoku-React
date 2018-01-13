@@ -36,80 +36,48 @@ const medium_hard =(symbol, size, chart, level)=> {
             // > right
             if ((size - i) >= 5) {
               for (let k=1; k<=5; k++) {
-                if ((i + k) <= (size - 1)) {
-                  if (chart[i+k][j].indexOf("-") > -1) {
-                    if (level === "medium" || (level === "hard" && possibleFields.length < 3)) {
-                      possibleFields.push(chart[i+k][j]);
-                    }
-                    else {
-                      if ((i - 1) >= 0 && possibleFields.length > 2 && chart[i-1][j] === symbol) {
-                        possibleFields.push(chart[i+k][j]);
-                      }
-                    }
-                    break;
-                  }
-                  else if (chart[i+k][j] === vsSymbol) {break;}
+                if (((i + k) <= (size - 1)) && chart[i+k][j].indexOf("-") > -1) {
+                  (level === "medium" || (level === "hard" && possibleFields.length < 3)) ? possibleFields.push(chart[i+k][j])
+                  : ((i - 1) >= 0 && possibleFields.length > 2 && chart[i-1][j] === symbol) && possibleFields.push(chart[i+k][j]);
+                  break;
                 }
+                else if (chart[i+k][j] === vsSymbol) {break;}
               }
             }
 
             // > left
             if (((size - i) <= 9) && (i >= 1)) {
               for (let k=1; k<=5; k++) {
-                if ((i - k) >= 0 && possibleFields.length > 2) {
-                  if (chart[i-k][j].indexOf("-") > -1) {
-                    if (level === "medium" || (level === "hard" && possibleFields.length < 3)) {
-                      possibleFields.push(chart[i-k][j]);
-                    }
-                    else {
-                      if ((i + 1) <= (size - 1) && possibleFields.length > 2 && chart[i+1][j] === symbol) {
-                        possibleFields.push(chart[i-k][j]);
-                      }
-                    }
-                    break;
-                  }
-                  else if (chart[i-k][j] === vsSymbol) {break;}
+                if (((i - k) >= 0 && possibleFields.length > 2) && chart[i-k][j].indexOf("-") > -1) {
+                  (level === "medium" || (level === "hard" && possibleFields.length < 3)) ? possibleFields.push(chart[i-k][j])
+                  : ((i + 1) <= (size - 1) && possibleFields.length > 2 && chart[i+1][j] === symbol) && possibleFields.push(chart[i-k][j]);
+                  break;
                 }
+                else if (chart[i-k][j] === vsSymbol) {break;}
               }
             }
 
             // > top
             if ((size - j) <= 9 && (j >= 1)) {
               for (let k=1; k<=5; k++) {
-                if ((j - k) >= 0 && possibleFields.length > 2) {
-                  if (chart[i][j-k].indexOf("-") > -1) {
-                    if (level === "medium" || (level === "hard" && possibleFields.length < 3)) {
-                      possibleFields.push(chart[i][j-k]);
-                    }
-                    else {
-                      if ((j + 1) <= (size -1) && possibleFields.length > 2 && chart[i][j+1] === symbol) {
-                        possibleFields.push(chart[i][j-k]);
-                      }
-                    }
-                    break;
-                  }
-                  else if (chart[i][j-k] === vsSymbol) {break;}
+                if (((j - k) >= 0 && possibleFields.length > 2) && chart[i][j-k].indexOf("-") > -1) {
+                  (level === "medium" || (level === "hard" && possibleFields.length < 3)) ? possibleFields.push(chart[i][j-k])
+                  : ((j + 1) <= (size -1) && possibleFields.length > 2 && chart[i][j+1] === symbol) && possibleFields.push(chart[i][j-k]);
+                  break;
                 }
+                else if (chart[i][j-k] === vsSymbol) {break;}
               }
             }
 
             // > bottom
             if ((size - j) >= 5) {
               for (let k=1; k<=5; k++) {
-                if ((j + k) <= (size -1)) {
-                  if (chart[i][j+k].indexOf("-") > -1) {
-                    if (level === "medium" || (level === "hard" && possibleFields.length < 3)) {
-                      possibleFields.push(chart[i][j+k]);
-                    }
-                    else {
-                      if ((j - 1) >= 0 && possibleFields.length > 2 && chart[i][j-1] === symbol) {
-                        possibleFields.push(chart[i][j+k]);
-                      }
-                    }
-                    break;
-                  }
-                  else if (chart[i][j+k] === vsSymbol) {break;}
+                if (((j + k) <= (size -1)) && chart[i][j+k].indexOf("-") > -1) {
+                  (level === "medium" || (level === "hard" && possibleFields.length < 3)) ? possibleFields.push(chart[i][j+k])
+                  : ((j - 1) >= 0 && possibleFields.length > 2 && chart[i][j-1] === symbol) && possibleFields.push(chart[i][j+k]);
+                  break;
                 }
+                else if (chart[i][j+k] === vsSymbol) {break;}
               }
             }
 
