@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -579,9 +579,9 @@ exports.default = Icon;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(42);
+  module.exports = __webpack_require__(41);
 } else {
-  module.exports = __webpack_require__(43);
+  module.exports = __webpack_require__(42);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
@@ -1191,7 +1191,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(45);
+var isTextNode = __webpack_require__(44);
 
 /*eslint-disable no-bitwise */
 
@@ -1555,9 +1555,9 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(44);
+  module.exports = __webpack_require__(43);
 } else {
-  module.exports = __webpack_require__(47);
+  module.exports = __webpack_require__(46);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
@@ -1578,7 +1578,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 
-var hyphenate = __webpack_require__(48);
+var hyphenate = __webpack_require__(47);
 
 var msPattern = /^ms-/;
 
@@ -1620,7 +1620,7 @@ module.exports = hyphenateStyleName;
 
 
 
-var camelize = __webpack_require__(49);
+var camelize = __webpack_require__(48);
 
 var msPattern = /^-ms-/;
 
@@ -1649,211 +1649,6 @@ module.exports = camelizeStyleName;
 
 /***/ }),
 /* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.App = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(7);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(24);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _HeadNavbar = __webpack_require__(50);
-
-var _Chart = __webpack_require__(96);
-
-var _Stats = __webpack_require__(97);
-
-var _AI = __webpack_require__(98);
-
-var _WinInfo = __webpack_require__(99);
-
-var _text = __webpack_require__(100);
-
-var _chart = __webpack_require__(33);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var App = exports.App = function (_React$Component) {
-  _inherits(App, _React$Component);
-
-  function App(props) {
-    _classCallCheck(this, App);
-
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-    _this.changeSymbol = function (event) {
-      !_this.state.isRunGame && _this.setState({ symbol: !_this.state.symbol });
-      event.preventDefault();
-    };
-
-    _this.changeLang = function (event) {
-      _this.setState({ text: _this.state.text === _text.textEng ? _text.textPol : _text.textEng });
-      event.preventDefault();
-    };
-
-    _this.placeSymbol = function (x, y, symbol, isPlayer) {
-      var newChartTable = _this.state.chartTable;
-      newChartTable[x][y] = symbol;
-      _this.setState({ chartTable: newChartTable }, function () {
-        _this.moved(isPlayer);
-      });
-    };
-
-    _this.move = function (difficulty) {
-      setTimeout(function () {
-        if (!_this.state.win) {
-          var field = (0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size, _this.state.symbol ? "cross" : "circle");
-          var x = field[0];
-          var y = field[1];
-          console.log(x, y);
-          _this.placeSymbol(x, y, _this.state.symbol ? "cross" : "circle", false);
-          _this.setState({ availableMove: true });
-          _this.checkWinner();
-        }
-      }, 500);
-    };
-
-    _this.mouseClick = function (event) {
-      if (_this.state.isRunGame && event.target.className !== "symbol" && _this.state.availableMove) {
-        _this.setState({ availableMove: false });
-        var x = Number(event.target.id.split("-")[0]);
-        var y = Number(event.target.id.split("-")[1]);
-        _this.placeSymbol(x, y, _this.state.symbol ? "circle" : "cross", true);
-        _this.checkWinner();
-        switch (_this.state.difficulty) {
-          case 1:
-            _this.move("easy");break;
-          case 2:
-            _this.move("medium");break;
-          case 3:
-            _this.move("hard");break;
-        }
-      }
-    };
-
-    _this.checkWinner = function () {
-      if (!_this.state.win) {
-        var winner = (0, _AI.checkWinner)(5, _this.state.chartTable, 1 + 4 * _this.state.size);
-        if (winner !== false) {
-          if (_this.state.symbol && winner === "circle" || !_this.state.symbol && winner === "cross") {
-            console.log("YOU WIN!");
-            _this.startNewGame(event);
-            _this.setState({
-              win: true
-            }, function () {
-              $("#winner").modal("open");
-            });
-          } else {
-            _this.startNewGame();
-            _this.setState({
-              win: false
-            }, function () {
-              $("#winner").modal("open");
-            });
-            console.log("YOU LOSE!");
-          }
-        }
-      }
-    };
-
-    _this.startNewGame = function (event) {
-      !_this.state.isRunGame && (0, _chart.renderChart)();
-      _this.setState({
-        isRunGame: !_this.state.isRunGame,
-        moves: 0,
-        freeCells: (1 + 4 * _this.state.size) * (1 + 4 * _this.state.size),
-        win: false,
-        availableMove: true,
-        chartTable: _chart.chartTable
-      });
-      event && event.preventDefault();
-    };
-
-    _this.moved = function (isPlayer) {
-      _this.setState({
-        moves: isPlayer ? _this.state.moves + 1 : _this.state.moves,
-        freeCells: _this.state.freeCells - 1
-      });
-    };
-
-    _this.resize = function (event) {
-      if (!_this.state.isRunGame) {
-        _this.setState({
-          size: _this.state.size < 3 ? _this.state.size + 1 : 1
-        }, function () {
-          (0, _chart.renderChartSize)(1 + 4 * _this.state.size, 1 + 4 * _this.state.size);
-          (0, _chart.renderChart)();
-          _this.setState({
-            chartTable: _chart.chartTable,
-            freeCells: (1 + 4 * _this.state.size) * (1 + 4 * _this.state.size)
-          });
-        });
-      }
-      event.preventDefault();
-    };
-
-    _this.changeDifficulty = function (event) {
-      if (!_this.state.isRunGame) {
-        _this.setState({ difficulty: _this.state.difficulty < 3 ? _this.state.difficulty + 1 : 1 });
-      }
-      event.preventDefault();
-    };
-
-    _this.state = {
-      text: _text.textEng,
-      isRunGame: false,
-      symbol: true, //true - GREEN CIRCLE, false - RED CROSS
-      moves: 0,
-      freeCells: _chart.chartCellsNumber,
-      availableMove: true, //BLOCKING MOVE DURING COMPUTER TURN
-      size: 3, //1 - SMALL, 2 - MEDIUM, 3 - LARGE
-      difficulty: 2, //1 - EASY, 2 - MEDIUM, 3 - LARGE
-      win: false,
-      chartTable: _chart.chartTable
-    };
-    return _this;
-  }
-
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'App' },
-        _react2.default.createElement(_HeadNavbar.HeadNavbar, { text: this.state.text, changeSymbol: this.changeSymbol, symbol: this.state.symbol, startNewGame: this.startNewGame,
-          isRunGame: this.state.isRunGame, changeLang: this.changeLang, resize: this.resize, size: this.state.size,
-          changeDifficulty: this.changeDifficulty, difficulty: this.state.difficulty }),
-        _react2.default.createElement(_Stats.Stats, { text: this.state.text, moves: this.state.moves, freeCells: this.state.freeCells, isRunGame: this.state.isRunGame }),
-        _react2.default.createElement(_Chart.Chart, { isRunGame: this.state.isRunGame, symbol: this.state.symbol, moved: this.moved, chartTable: this.state.chartTable,
-          mouseClick: this.mouseClick }),
-        _react2.default.createElement(_WinInfo.WinInfo, { win: this.state.win })
-      );
-    }
-  }]);
-
-  return App;
-}(_react2.default.Component);
-
-/***/ }),
-/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1896,7 +1691,7 @@ var _CardTitle = __webpack_require__(61);
 
 var _CardTitle2 = _interopRequireDefault(_CardTitle);
 
-var _Chip = __webpack_require__(29);
+var _Chip = __webpack_require__(28);
 
 var _Chip2 = _interopRequireDefault(_Chip);
 
@@ -1964,11 +1759,11 @@ var _Navbar = __webpack_require__(78);
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
 
-var _Overlay = __webpack_require__(31);
+var _Overlay = __webpack_require__(30);
 
 var _Overlay2 = _interopRequireDefault(_Overlay);
 
-var _OverlayTrigger = __webpack_require__(30);
+var _OverlayTrigger = __webpack_require__(29);
 
 var _OverlayTrigger2 = _interopRequireDefault(_OverlayTrigger);
 
@@ -1976,7 +1771,7 @@ var _Pagination = __webpack_require__(79);
 
 var _Pagination2 = _interopRequireDefault(_Pagination);
 
-var _PaginationButton = __webpack_require__(32);
+var _PaginationButton = __webpack_require__(31);
 
 var _PaginationButton2 = _interopRequireDefault(_PaginationButton);
 
@@ -2088,7 +1883,7 @@ exports.Tag = _Tag2.default;
 exports.Toast = _Toast2.default;
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2136,7 +1931,7 @@ Chip.propTypes = {
 exports.default = Chip;
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2156,7 +1951,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Overlay2 = __webpack_require__(31);
+var _Overlay2 = __webpack_require__(30);
 
 var _Overlay3 = _interopRequireDefault(_Overlay2);
 
@@ -2264,7 +2059,7 @@ OverlayTrigger.propTypes = {
 exports.default = OverlayTrigger;
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2389,7 +2184,7 @@ Overlay.defaultProps = {
 exports.default = Overlay;
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2454,7 +2249,7 @@ PaginationButton.propTypes = {
 exports.default = PaginationButton;
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2499,16 +2294,15 @@ function renderChart() {
 }
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(35);
-__webpack_require__(36);
-module.exports = __webpack_require__(27);
+__webpack_require__(34);
+module.exports = __webpack_require__(35);
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -2975,13 +2769,13 @@ module.exports = __webpack_require__(27);
 
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(37);
+__webpack_require__(36);
 
 var _react = __webpack_require__(7);
 
@@ -2991,7 +2785,7 @@ var _reactDom = __webpack_require__(24);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _app = __webpack_require__(27);
+var _app = __webpack_require__(49);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3001,13 +2795,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(38);
+var content = __webpack_require__(37);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -3015,7 +2809,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(40)(content, options);
+var update = __webpack_require__(39)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -3032,10 +2826,10 @@ if(false) {
 }
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(39)(false);
+exports = module.exports = __webpack_require__(38)(false);
 // imports
 
 
@@ -3046,7 +2840,7 @@ exports.push([module.i, "html {\n  animation: opacity 1s;\n  background-color: #
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports) {
 
 /*
@@ -3128,7 +2922,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3184,7 +2978,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(41);
+var	fixUrls = __webpack_require__(40);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -3500,7 +3294,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports) {
 
 
@@ -3595,7 +3389,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3623,7 +3417,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4988,7 +4782,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5224,7 +5018,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5239,7 +5033,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(46);
+var isNode = __webpack_require__(45);
 
 /**
  * @param {*} object The object to check.
@@ -5252,7 +5046,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5280,7 +5074,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20682,7 +20476,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20718,7 +20512,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20753,6 +20547,213 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.App = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(24);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _HeadNavbar = __webpack_require__(50);
+
+var _Chart = __webpack_require__(96);
+
+var _Stats = __webpack_require__(97);
+
+var _AI = __webpack_require__(98);
+
+var _WinInfo = __webpack_require__(99);
+
+var _text = __webpack_require__(100);
+
+var _chart = __webpack_require__(32);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = exports.App = function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App(props) {
+    _classCallCheck(this, App);
+
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.changeSymbol = function (event) {
+      !_this.state.isRunGame && _this.setState({ symbol: !_this.state.symbol });
+      event.preventDefault();
+    };
+
+    _this.changeLang = function (event) {
+      _this.setState({ text: _this.state.text === _text.textEng ? _text.textPol : _text.textEng });
+      event.preventDefault();
+    };
+
+    _this.placeSymbol = function (x, y, symbol, isPlayer) {
+      var newChartTable = _this.state.chartTable;
+      newChartTable[x][y] = symbol;
+      _this.setState({ chartTable: newChartTable }, function () {
+        _this.moved(isPlayer);
+      });
+    };
+
+    _this.move = function (difficulty) {
+      setTimeout(function () {
+        if (!_this.state.win) {
+          var field = (0, _AI.Move)(difficulty, _this.state.chartTable, 1 + 4 * _this.state.size, _this.state.symbol ? "cross" : "circle");
+          console.log("elo");
+          console.log(field);
+          var x = field[0];
+          var y = field[1];
+          console.log(x, y);
+          _this.placeSymbol(x, y, _this.state.symbol ? "cross" : "circle", false);
+          _this.setState({ availableMove: true });
+          _this.checkWinner();
+        }
+      }, 500);
+    };
+
+    _this.mouseClick = function (event) {
+      if (_this.state.isRunGame && event.target.className !== "symbol" && _this.state.availableMove) {
+        _this.setState({ availableMove: false });
+        var x = Number(event.target.id.split("-")[0]);
+        var y = Number(event.target.id.split("-")[1]);
+        _this.placeSymbol(x, y, _this.state.symbol ? "circle" : "cross", true);
+        _this.checkWinner();
+        switch (_this.state.difficulty) {
+          case 1:
+            _this.move("easy");break;
+          case 2:
+            _this.move("medium");break;
+          case 3:
+            _this.move("hard");break;
+        }
+      }
+    };
+
+    _this.checkWinner = function () {
+      if (!_this.state.win) {
+        var winner = (0, _AI.checkWinner)(5, _this.state.chartTable, 1 + 4 * _this.state.size);
+        if (winner !== false) {
+          if (_this.state.symbol && winner === "circle" || !_this.state.symbol && winner === "cross") {
+            console.log("YOU WIN!");
+            _this.startNewGame(event);
+            _this.setState({
+              win: true
+            }, function () {
+              $("#winner").modal("open");
+            });
+          } else {
+            _this.startNewGame();
+            _this.setState({
+              win: false
+            }, function () {
+              $("#winner").modal("open");
+            });
+            console.log("YOU LOSE!");
+          }
+        }
+      }
+    };
+
+    _this.startNewGame = function (event) {
+      !_this.state.isRunGame && (0, _chart.renderChart)();
+      _this.setState({
+        isRunGame: !_this.state.isRunGame,
+        moves: 0,
+        freeCells: (1 + 4 * _this.state.size) * (1 + 4 * _this.state.size),
+        win: false,
+        availableMove: true,
+        chartTable: _chart.chartTable
+      });
+      event && event.preventDefault();
+    };
+
+    _this.moved = function (isPlayer) {
+      _this.setState({
+        moves: isPlayer ? _this.state.moves + 1 : _this.state.moves,
+        freeCells: _this.state.freeCells - 1
+      });
+    };
+
+    _this.resize = function (event) {
+      if (!_this.state.isRunGame) {
+        _this.setState({
+          size: _this.state.size < 3 ? _this.state.size + 1 : 1
+        }, function () {
+          (0, _chart.renderChartSize)(1 + 4 * _this.state.size, 1 + 4 * _this.state.size);
+          (0, _chart.renderChart)();
+          _this.setState({
+            chartTable: _chart.chartTable,
+            freeCells: (1 + 4 * _this.state.size) * (1 + 4 * _this.state.size)
+          });
+        });
+      }
+      event.preventDefault();
+    };
+
+    _this.changeDifficulty = function (event) {
+      if (!_this.state.isRunGame) {
+        _this.setState({ difficulty: _this.state.difficulty < 3 ? _this.state.difficulty + 1 : 1 });
+      }
+      event.preventDefault();
+    };
+
+    _this.state = {
+      text: _text.textEng,
+      isRunGame: false,
+      symbol: true, //true - GREEN CIRCLE, false - RED CROSS
+      moves: 0,
+      freeCells: _chart.chartCellsNumber,
+      availableMove: true, //BLOCKING MOVE DURING COMPUTER TURN
+      size: 3, //1 - SMALL, 2 - MEDIUM, 3 - LARGE
+      difficulty: 2, //1 - EASY, 2 - MEDIUM, 3 - LARGE
+      win: false,
+      chartTable: _chart.chartTable
+    };
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'App' },
+        _react2.default.createElement(_HeadNavbar.HeadNavbar, { text: this.state.text, changeSymbol: this.changeSymbol, symbol: this.state.symbol, startNewGame: this.startNewGame,
+          isRunGame: this.state.isRunGame, changeLang: this.changeLang, resize: this.resize, size: this.state.size,
+          changeDifficulty: this.changeDifficulty, difficulty: this.state.difficulty }),
+        _react2.default.createElement(_Stats.Stats, { text: this.state.text, moves: this.state.moves, freeCells: this.state.freeCells, isRunGame: this.state.isRunGame }),
+        _react2.default.createElement(_Chart.Chart, { isRunGame: this.state.isRunGame, symbol: this.state.symbol, moved: this.moved, chartTable: this.state.chartTable,
+          mouseClick: this.mouseClick }),
+        _react2.default.createElement(_WinInfo.WinInfo, { win: this.state.win })
+      );
+    }
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+/***/ }),
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20768,7 +20769,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactMaterialize = __webpack_require__(28);
+var _reactMaterialize = __webpack_require__(27);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25020,7 +25021,7 @@ var _classnames = __webpack_require__(2);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _OverlayTrigger = __webpack_require__(30);
+var _OverlayTrigger = __webpack_require__(29);
 
 var _OverlayTrigger2 = _interopRequireDefault(_OverlayTrigger);
 
@@ -41150,7 +41151,7 @@ var _Icon = __webpack_require__(6);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _PaginationButton = __webpack_require__(32);
+var _PaginationButton = __webpack_require__(31);
 
 var _PaginationButton2 = _interopRequireDefault(_PaginationButton);
 
@@ -42653,7 +42654,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Chip = __webpack_require__(29);
+var _Chip = __webpack_require__(28);
 
 var _Chip2 = _interopRequireDefault(_Chip);
 
@@ -42774,7 +42775,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _chart = __webpack_require__(33);
+var _chart = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43169,7 +43170,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactMaterialize = __webpack_require__(28);
+var _reactMaterialize = __webpack_require__(27);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

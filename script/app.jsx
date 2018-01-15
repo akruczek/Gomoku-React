@@ -47,6 +47,8 @@ export class App extends React.Component {
     setTimeout(()=> {
       if (!this.state.win) {
         let field = Move(difficulty, this.state.chartTable, (1 + 4 * this.state.size), (this.state.symbol ? "cross" : "circle"));
+        console.log("elo");
+        console.log(field);
         let x = field[0];
         let y = field[1];
         console.log(x, y);

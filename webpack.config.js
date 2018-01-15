@@ -1,5 +1,5 @@
 module.exports = {
-    entry: ["whatwg-fetch", "./script/main.jsx", "./script/app.jsx"],
+    entry: ["whatwg-fetch", "./script/main.jsx"],
     output: {
       filename: "./script/out.js",
     },
