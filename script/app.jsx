@@ -146,7 +146,7 @@ export class App extends React.Component {
         <Stats text={this.state.text} moves={this.state.moves} freeCells={this.state.freeCells} isRunGame={this.state.isRunGame}/>
         <Chart isRunGame={this.state.isRunGame} symbol={this.state.symbol} moved={this.moved} chartTable={this.state.chartTable}
           mouseClick={this.mouseClick}/>
-        <WinInfo win={this.state.win}/>
+        <WinInfo win={this.state.win} text={this.state.text} />
       </div>
     );
   }

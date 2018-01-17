@@ -20745,7 +20745,7 @@ var App = exports.App = function (_React$Component) {
         _react2.default.createElement(_Stats.Stats, { text: this.state.text, moves: this.state.moves, freeCells: this.state.freeCells, isRunGame: this.state.isRunGame }),
         _react2.default.createElement(_Chart.Chart, { isRunGame: this.state.isRunGame, symbol: this.state.symbol, moved: this.moved, chartTable: this.state.chartTable,
           mouseClick: this.mouseClick }),
-        _react2.default.createElement(_WinInfo.WinInfo, { win: this.state.win })
+        _react2.default.createElement(_WinInfo.WinInfo, { win: this.state.win, text: this.state.text })
       );
     }
   }]);
@@ -43177,15 +43177,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var WinInfo = exports.WinInfo = function WinInfo(props) {
   return _react2.default.createElement(
     _reactMaterialize.Modal,
-    { id: 'winner', header: '' },
+    { id: 'winner', header: '', actions: _react2.default.createElement(
+        'button',
+        { 'class': 'btn waves-effect waves-light btn-flat modal-action modal-close' },
+        props.text.Close
+      ) },
     props.win ? _react2.default.createElement(
       'h1',
-      { style: { textAlign: "center" } },
-      'YOU WIN!'
+      { style: { textAlign: "center", textTransform: "uppercase" } },
+      props.text.you_win
     ) : _react2.default.createElement(
       'h1',
-      null,
-      'YOU LOSE'
+      { style: { textAlign: "center", textTransform: "uppercase" } },
+      props.text.you_lose
     )
   );
 };
@@ -43211,7 +43215,10 @@ var textEng = exports.textEng = {
   Medium: "Medium",
   Large: "Large",
   Easy: "Easy",
-  Hard: "Hard"
+  Hard: "Hard",
+  you_win: "you win!",
+  you_lose: "you lose!",
+  Close: "Close"
 };
 
 var textPol = exports.textPol = {
@@ -43225,7 +43232,10 @@ var textPol = exports.textPol = {
   Medium: "Średni",
   Large: "Duży",
   Easy: "Łatwy",
-  Hard: "Trudny"
+  Hard: "Trudny",
+  you_win: "wygrywasz!",
+  you_lose: "przegrywasz!",
+  Close: "Zamknij"
 };
 
 /***/ })

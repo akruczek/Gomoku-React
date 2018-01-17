@@ -9,7 +9,10 @@ export const textEng = {
   Medium: "Medium",
   Large: "Large",
   Easy: "Easy",
-  Hard: "Hard"
+  Hard: "Hard",
+  you_win: "you win!",
+  you_lose: "you lose!",
+  Close: "Close"
 }
 
 export const textPol = {
@@ -23,5 +26,8 @@ export const textPol = {
   Medium: "Średni",
   Large: "Duży",
   Easy: "Łatwy",
-  Hard: "Trudny"
+  Hard: "Trudny",
+  you_win: "wygrywasz!",
+  you_lose: "przegrywasz!",
+  Close: "Zamknij"
 }
